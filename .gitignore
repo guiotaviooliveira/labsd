@@ -1,7 +1,7 @@
 # Gerados pelo Quartus/Modelsim #
 ##################
 *.cr.mti
-*v.hd.bak
+*.vhd.bak
 *.qarlog
 *.wlf
 /db

@@ -34,7 +34,7 @@ begin
 				OUTPUT => S_OUTPUT
 		);
 	S_CLK <= not S_CLK after 5 ns;
-	S_INPUT <=  "00001000", "00000100" after 10 ns,"00001000" after 20 ns, "00000011" after 30 ns, x"01" after 40 ns ;
+	S_INPUT <=  "00001000", "00000100" after 10 ns,"00001001" after 20 ns, "00000011" after 30 ns, x"01" after 40 ns ;
 	S_RESET <= '0', '1' after 100 ns;
 	
 end test;

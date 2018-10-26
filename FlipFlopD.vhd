@@ -12,11 +12,5 @@ end FlipFlopD;
 
 architecture RTL of FlipFlopD is
 begin
-	process(CLK)
-	begin
-		if (CLK='1' and CLK'event) then
-			Q <= D;
-			-- NOT_q <= not D;
-		end if;
-	end process;
+	Q <= D when rising_edge(CLK);
 end RTL;

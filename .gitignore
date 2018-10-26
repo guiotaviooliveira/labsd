@@ -4,12 +4,20 @@
 *.vhd.bak
 *.qarlog
 *.wlf
+fulladder/*.cr.mti
+fulladder/*.vhd.bak
+fulladder/*.qarlog
+fulladder/*.wlf
+fulladder/db
+fulladder/incremental_db
+fulladder/output_files
+fulladder/simulation
+fulladder/work
 /db
 /incremental_db
 /output_files
 /simulation
 /work
-
 # General #
 ###################
 *.pdf

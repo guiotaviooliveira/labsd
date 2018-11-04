@@ -18,7 +18,7 @@ library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
-entity blackcell is
+entity innerpgblock is
 	port (
 			g0	: in  std_logic;
 			p0	: in  std_logic;
@@ -27,10 +27,10 @@ entity blackcell is
 			G	: out std_logic;
 			P	: out std_logic
 		);
-end blackcell;
+end innerpgblock;
 
-architecture behavioral of blackcell is
+architecture arch_innerpgblock of innerpgblock is
 begin
 	G <= (g1 or(g0 and p1));
 	P <= (p0 and p1);
-end behavioral;
+end arch_innerpgblock;

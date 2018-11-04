@@ -27,8 +27,8 @@ entity pgblock is
 		);
 end pgblock;
 
-architecture behavioral of pgblock is
+architecture arch_pgblock of pgblock is
 begin
 	g0 <= (a and b);
 	p0 <= (a xor b);
-end behavioral;
+end arch_pgblock;

@@ -18,14 +18,14 @@ library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
-entity bufferr is
+entity buf is
 	port (
 			g	: in  std_logic;
 			c	: out std_logic
 		);
-end bufferr;
+end buf;
 
-architecture behavioral of bufferr is
+architecture buf_arch of buf is
 begin
 	c <= g;
-end behavioral;
+end buf_arch;

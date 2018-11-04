@@ -4,6 +4,7 @@
 *.vhd.bak
 *.qarlog
 *.wlf
+*.rpt
 fulladder/*.cr.mti
 fulladder/*.vhd.bak
 fulladder/*.qarlog

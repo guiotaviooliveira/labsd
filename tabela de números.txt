@@ -8,3 +8,9 @@
 0110 (6)  - 1001 (9)  -     -  110 1100 (108)
 0111 (7)  - 1000 (8)  -     -  111 0000 (112)
 1111 (15) - 0000 (0)  -     -  000 0000 (0)
+
+links uteis
+https://edisciplinas.usp.br/pluginfile.php/530833/mod_resource/content/1/Apostila%20de%20Introdu%C3%A7%C3%A3o%20a%20VHDL_2014.pdf
+https://www.doulos.com/knowhow/vhdl_designers_guide/numeric_std/
+https://www.ics.uci.edu/~jmoorkan/vhdlref/
+http://www.synthworks.com/papers/vhdl_math_tricks_mapld_2003.pdf

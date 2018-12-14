@@ -10,18 +10,18 @@ architecture teste of tb_atm is
 	component atm is	
 		port( 
 			CLK, RESET, CARD, ENTER	: in std_logic;					
-			NUMKEY 						: in unsigned(15 downto 0);
-			notas_100, notas_50, notas_20, notas_10, notas_5, notas_2, notas_1 : out unsigned(15 downto 0)
+			NUMKEY 						: in std_logic_vector(15 downto 0);
+			notas_100, notas_50, notas_20, notas_10, notas_5, notas_2, notas_1 : out std_logic_vector(15 downto 0)
 		);
 	end component;
 	
 	signal SCLK, SRESET, SCARD, SENTER : std_logic := '0';
-	signal SNUMKEY, SN100, SN50, SN20, SN10, SN5, SN2, SN1 : unsigned(15 downto 0);
+	signal SNUMKEY, SN100, SN50, SN20, SN10, SN5, SN2, SN1 : std_logic_vector(15 downto 0);
 	
 begin
 
 	instancia_atm	:	atm port map (SCLK, SRESET, SCARD, SENTER,SNUMKEY, SN100, SN50, SN20, SN10, SN5, SN2, SN1);
-	
+	SNUMKEY <= "0000000000000000";
 	SCLK  <= not SCLK after 5 ns;
 	SRESET <= '1', '0' after 5 ns;
 	SCARD 	<= '1' after 10 ns;

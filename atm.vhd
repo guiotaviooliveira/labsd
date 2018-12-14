@@ -110,6 +110,14 @@ begin
 			notas_2 <= STD_logic_vector(TMP/2);
 			TMP := TMP rem 2;
 			notas_1 <= STD_logic_vector(TMP/1);
+		else
+			notas_100 <= "0000000000000000";
+			notas_50  <= "0000000000000000";
+			notas_20  <= "0000000000000000";
+			notas_10  <= "0000000000000000";
+			notas_5   <= "0000000000000000";
+			notas_2   <= "0000000000000000";
+			notas_1   <= "0000000000000000";
 		end if;
 	end process;
 	

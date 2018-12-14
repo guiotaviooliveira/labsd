@@ -5,14 +5,14 @@ use ieee.numeric_std.all;
 entity atm is
 	port( 
 		CLK, RESET, CARD, ENTER	: in std_logic;					
-		NUMKEY : in unsigned(15 downto 0);
-		notas_100, notas_50, notas_20, notas_10, notas_5, notas_2, notas_1 : out unsigned(7 downto 0);
+		NUMKEY : in std_logic_vector(15 downto 0);
+		notas_100, notas_50, notas_20, notas_10, notas_5, notas_2, notas_1 : out std_logic_vector(15 downto 0)
 	);
 end atm;
 
 architecture atm_arch of atm is
 
-	type estado is (st_inicio, st_senha, st_acesso, st_saque, st_retirar, st_deposito, st_espera);
+	type estado is (st_inicio, st_senha, st_acesso, st_saque, st_retirar, st_deposito, st_espera, st_valordeposito);
 	signal estado_atual, proximo_estado: estado := st_inicio;
 	signal valor_disponivel, valor_saque, aux: unsigned(15 downto 0);
 	signal senha : unsigned(15 downto 0):= "0000000000000010"; 
@@ -26,7 +26,7 @@ begin
 		end if;
 	end process;
 	
-	process(CARD, ENTER, NUMKEY) is
+	process(CLK, ENTER) is
 	begin
 		case estado_atual is
 			when st_inicio =>
@@ -39,29 +39,36 @@ begin
 			when st_senha =>
 				if(NUMKEY = senha and ENTER = '1') then
 					proximo_estado <= st_acesso;
-				elsif(NUMKEY /= senha and ENTER = '1') then
+				elsif(not(NUMKEY = senha) and ENTER = '1') then
 					proximo_estado <= st_inicio;
 				else 
 					proximo_estado <= st_senha;
 				end if;
 			
 			when st_acesso =>		
-				if(NUMKEY = '0' and ENTER = '1') then
+				if(NUMKEY = "0000000000000000" and ENTER = '1') then
 					proximo_estado <= st_deposito;
-				elsif(NUMKEY = '1' and ENTER = '1') then
-					proximo_estado <= st_retirar;
+				elsif(NUMKEY = "0000000000000001" and ENTER = '1') then
+					proximo_estado <= st_saque;
 				else 
 					proximo_estado <= st_acesso;
 				end if;
 			
 			when st_deposito =>
-				if(NUMKEY >= 0 and ENTER = '1') then
+				if(NUMKEY >= "0000000000000000" and ENTER = '1') then
 					valor_disponivel <= valor_disponivel + NUMKEY;
-					proximo_estado <= st_espera;
+					proximo_estado <= st_valordeposito;
 				else
 					proximo_estado <= st_deposito;
 				end if;
-			
+				
+			when st_valordeposito =>
+				if(NUMKEY > "0000000000000000" and ENTER = '1') then
+					valor_disponivel <= valor_disponivel + NUMKEY;
+					proximo_estado <= st_espera;
+				else
+					proximo_estado <= st_valordeposito;
+				end if;
 			when st_saque =>
 				if(NUMKEY <= valor_disponivel and ENTER = '1') then
 					valor_disponivel <= valor_disponivel - NUMKEY;

@@ -10,8 +10,8 @@ architecture teste of tb_atm is
 	component atm is	
 		port( 
 			CLK, RESET, CARD, ENTER	: in std_logic;					
-			NUMKEY 						: in std_logic_vector(15 downto 0);
-			notas_100, notas_50, notas_20, notas_10, notas_5, notas_2, notas_1 : out std_logic_vector(15 downto 0)
+			NUMKEY 						: in std_logic_vector(15 downto 0)
+			
 		);
 	end component;
 	

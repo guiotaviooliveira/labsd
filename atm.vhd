@@ -1,4 +1,4 @@
-library ieee;
+	library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
@@ -14,8 +14,8 @@ architecture atm_arch of atm is
 
 	type estado is (st_inicio, st_senha, st_acesso, st_saque, st_retirar, st_deposito, st_espera, st_valordeposito);
 	signal estado_atual, proximo_estado: estado := st_inicio;
-	signal valor_disponivel, valor_saque, aux: unsigned(15 downto 0);
-	signal senha : unsigned(15 downto 0):= "0000000000000010"; 
+	signal valor_disponivel, valor_saque, aux: std_logic_vector(15 downto 0);
+	signal senha : std_logic_vector(15 downto 0):= "0000000000000010"; 
 begin
 	process(CLK, RESET) is
 	begin
@@ -37,9 +37,9 @@ begin
 				end if;
 				
 			when st_senha =>
-				if(NUMKEY = senha and ENTER = '1') then
+				if(UNSIGNED(NUMKEY) = UNSIGNED(senha) and ENTER = '1') then
 					proximo_estado <= st_acesso;
-				elsif(not(NUMKEY = senha) and ENTER = '1') then
+				elsif(not(UNSIGNED(NUMKEY) = UNSIGNED(senha)) and ENTER = '1') then
 					proximo_estado <= st_inicio;
 				else 
 					proximo_estado <= st_senha;
@@ -56,7 +56,6 @@ begin
 			
 			when st_deposito =>
 				if(NUMKEY >= "0000000000000000" and ENTER = '1') then
-					valor_disponivel <= valor_disponivel + NUMKEY;
 					proximo_estado <= st_valordeposito;
 				else
 					proximo_estado <= st_deposito;
@@ -64,14 +63,14 @@ begin
 				
 			when st_valordeposito =>
 				if(NUMKEY > "0000000000000000" and ENTER = '1') then
-					valor_disponivel <= valor_disponivel + NUMKEY;
+					valor_disponivel <= STD_logic_vector(UNSIGNED(valor_disponivel) + UNSIGNED(NUMKEY));
 					proximo_estado <= st_espera;
 				else
 					proximo_estado <= st_valordeposito;
 				end if;
 			when st_saque =>
 				if(NUMKEY <= valor_disponivel and ENTER = '1') then
-					valor_disponivel <= valor_disponivel - NUMKEY;
+					valor_disponivel <= STD_logic_vector(UNSIGNED(valor_disponivel) - UNSIGNED(NUMKEY));
 					proximo_estado <= st_retirar;
 				else
 					proximo_estado <= st_saque;
@@ -95,21 +94,22 @@ begin
 	end process;
 	
 	process(estado_atual) is
+			variable TMP : unsigned(15 downto 0);
 	begin
 		if(estado_atual = st_retirar) then
-			notas_100 <= valor_saque/100;
-			aux <= valor_saque rem 100;
-			notas_50 <= aux/50;
-			aux <= aux rem 50;
-			notas_20 <= aux/20;
-			aux <= aux rem 20;
-			notas_10 <= aux/10;
-			aux <= aux rem 10;
-			notas_5 <= aux/5;
-			aux <= aux rem 5;
-			notas_2 <= aux/2;
-			aux <= aux rem 2;
-			notas_1 <= aux/1;
+			notas_100 <= STD_logic_vector(UNSIGNED(valor_saque)/100);
+			TMP := UNSIGNED(valor_saque) rem 100;
+			notas_50 <= STD_logic_vector(TMP/50);
+			TMP := TMP rem 50;
+			notas_20 <= STD_logic_vector(TMP/20);
+			TMP := TMP rem 20;
+			notas_10 <= STD_logic_vector(TMP/10);
+			TMP := TMP rem 10;
+			notas_5 <= STD_logic_vector(TMP/5);
+			TMP := TMP rem 5;
+			notas_2 <= STD_logic_vector(TMP/2);
+			TMP := TMP rem 2;
+			notas_1 <= STD_logic_vector(TMP/1);
 		end if;
 	end process;
 	
